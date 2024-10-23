@@ -16,7 +16,6 @@
 import logging
 import os
 import spidev
-import subprocess
 import sys
 
 import common.token as Token
@@ -57,12 +56,6 @@ class Hardware:
         self.ledstrip = None
         self.taptempo = taptempo.TapTempo(None)
 
-    def dtoverlay(self, overlay):
-        try:
-            subprocess.check_output(['sudo', 'dtoverlay', overlay])
-        except subprocess.CalledProcessError as e:
-            logging.error("dtoverlay failed:" + str(e.output))
-
     def toggle_tap_tempo_enable(self, bpm=0):
         if self.taptempo:
             self.taptempo.toggle_enable()
@@ -71,18 +64,6 @@ class Hardware:
                 logging.debug("tap tempo mode enabled: %d", bpm)
 
     def init_spi(self):
-        # bookworm and later requires a hack to allow both LCD and ADC on SPI0
-        # https://github.com/adafruit/Adafruit_Blinka/issues/755
-        # It would be great to avoid this hack if the blinka limitation can be resolved.  Until then...
-        # cs0 has to be assigned to an "unused" GPIO, we use 'em all so here is our per version compromise
-        #
-        if self.version < 3.0:
-            # v1 and v2 use GPIO 14 for MIDI-out, not ideal but likely least used
-            self.dtoverlay("spi0-2cs,cs0_pin=14,cs1_pin=7")
-        else:
-            # v3 GPIO 0 used for i2c.  Again not ideal, hopefully can resolve before i2c is needed
-            self.dtoverlay("spi0-2cs,cs0_pin=0,cs1_pin=7")
-
         self.spi = spidev.SpiDev()
         self.spi.open(0, 1)  # Bus 0, CE1
         # TODO SPI bus is shared by ADC and LCD.  Ideally, they would use the same frequency.
