@@ -116,7 +116,10 @@ class Footswitch(controller.Controller):
             self.adc_switch = analogswitch.AnalogSwitch(spi, adc_input, 800, self.pressed, taptempo = self.taptempo)
 
         if led_pin is not None:
-            self.led = GPIO.LED(led_pin)
+            try:
+                self.led = GPIO.LED(led_pin)
+            except Exception as e:
+                logging.error("Initializing LED for footswitch %d: %s" % (id, str(e)))
 
     def get_display_label(self):
         if self.taptempo and self.taptempo.is_enabled():
