@@ -86,7 +86,7 @@ if [ -z ${hardware_version+x} ]; then
     printf "\nUsing default hardware configuration\n";
 else
     printf "\n===== pi-Stomp mods for hardware version specified =====\n"
-    ${HOME}/pi-stomp/setup/pi-stomp-tweaks/modify_version.sh ${hardware_version}
+    ${HOME}/pi-stomp/util/modify_version.sh ${hardware_version}
 fi
 
 printf "\n===== Install pi-stomp package dependencies =====\n"
