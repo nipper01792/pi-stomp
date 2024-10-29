@@ -155,7 +155,7 @@ class WifiManager():
         # nmcli connection delete temp-test
         try:
             result = subprocess.check_output([
-                'sudo', 'nmcli', 'Rconnection', 'modify', self.connection_name,
+                'sudo', 'nmcli', 'connection', 'modify', self.connection_name,
                 '802-11-wireless.ssid', ssid,
                 '802-11-wireless-security.psk', password
             ], stderr=subprocess.STDOUT)
