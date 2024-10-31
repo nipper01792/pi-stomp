@@ -678,11 +678,11 @@ class Lcd(abstract_lcd.Lcd):
     # Analog Assignments (Tweak, Expression Pedal, etc.)
     def draw_analog_assignments(self, controllers):
         # Quite a few assumptions here
-        # Expression pedal in first position, then 3 knobs
+        # Expression pedal in first position, then 3 knobs (for v3)
         # Should work for more or fewer but won't likely look great on the LCD
 
         # spacing and scaling of text
-        num = max(3, len(controllers))
+        num = max(3, len(controllers) + 1)
         width_per_control = int(round(self.display_width / num))
         text_per_control = width_per_control - 16  # minus height of control icon
 
@@ -695,10 +695,8 @@ class Lcd(abstract_lcd.Lcd):
         for i in range(0, num):
             k = None
             v = None
-            print(controllers.items())
             for key, value in controllers.items():
                 id = util.DICT_GET(value, Token.ID)
-                print(id)
                 if id is not None and int(id) == i:
                     k = key
                     v = value
