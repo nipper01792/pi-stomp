@@ -125,7 +125,7 @@ class Footswitch(controller.Controller):
         if self.taptempo and self.taptempo.is_enabled():
             return str(round(self.taptempo.get_bpm()))
         elif self.midi_CC is None:
-            return "BPM"
+            return ""
         else:
             return self.display_label
 
@@ -145,7 +145,7 @@ class Footswitch(controller.Controller):
     def _set_led(self, enabled):
         if self.led is not None:
             if self.taptempo:
-                tempo = self.taptempo.get_tap_bpm()
+                tempo = self.taptempo.get_bpm()
                 if tempo:
                     period = 60/tempo
                     on = 0.1

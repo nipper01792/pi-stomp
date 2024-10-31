@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - New access to global EQ (v3 and v2 hardware)
 - Patchstorage for plugin management (discovery, download, install)
 - Filemanager for uploading audio files, MIDI, Impulse Response, Instruments and Amp Models (eg. NAM, Aida)
-- Support for tap-tempo
+- Support for tap-tempo (v3 and v2 hardware)
 - Support for most all common tasks via LCD/MOD-UI (ssh not required, v3 and v2 hardware)
 - Support for Pedalboard Banks (v3 and v2 hardware)
 - Support for alternate footswitch actions: longpress, multi-switch (v3 and v2 hardware)

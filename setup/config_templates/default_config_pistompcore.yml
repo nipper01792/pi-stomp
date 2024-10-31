@@ -13,46 +13,52 @@ hardware:
     channel: 14
 
   # footswitches definition
+  #   id: integer identifier and physical position (required for each footswitch)
   #   bypass: relay(s) to toggle (LEFT, RIGHT or LEFT_RIGHT)
   #   color: color to use for enable status halo on LCD
   #   debounce_input: debounce chip pin to which switch is connected
-  #   disable: disable the switch
   #   gpio_input: gpio pin if not using debounce
   #   gpio_output: gpio pin used to drive indicator (LED, etc.)
-  #   id: integer identifier
   #   midi_CC: msg to send (0 - 127)
+  #   longpress: The name of a handler method to call when switch is long-pressed
   #
   footswitches:
   - id: 0
     debounce_input: 0
     gpio_output: 0
-    bypass: LEFT
-    preset: UP
+    midi_CC: 61
+    longpress: next_snapshot
   - id: 1
     debounce_input: 1
     gpio_output: 13
     midi_CC: 62
+    longpress: previous_snapshot
     color: lime
   - id: 2
     debounce_input: 2
     gpio_output: 26
     midi_CC: 63
+    longpress: toggle_tap_tempo_enable
+    tap_tempo: set_mod_tap_tempo
     color: blue
 
-  # analog control definition
-  #   adc_input: adc chip pin to which control is connected
-  #   disable: disable the control
-  #   midi_CC: msg to send (0 - 127)
-  #   threshold: minimum value change to trigger a midi msg (16 default, 1024 full scale)
-  #   type: control type (KNOB, EXPRESSION)
+  # analog_controllers:
+  # Each control definition is a list which starts with the adc_input
+  # adc_input: <integer>          The analog input to which the control is connected (required)
+  # id: <integer>                 The id and position on the screen (starting with 0 on the left)
+  # type: <KNOB | EXPRESSION>     The control type, used to represent the control on the screen (optional)
+  # midi_CC: <integer>            The MIDI CC message to be sent when the control is adjusted (optional)
   #
-  #analog_controllers:
-  #- adc_input: 0
-  #  midi_CC: 70
-  #  type: KNOB
-  #- adc_input: 1
-  #  midi_CC: 71
-  #  type: KNOB
-  #- adc_input: 7
-  #  midi_CC: 77
-  #  type: EXPRESSION
+#  analog_controllers:
+#  - adc_input: 7
+#    id: 0
+#    midi_CC: 77
+#    type: EXPRESSION
+#  - adc_input: 0
+#    id: 1
+#    midi_CC: 70
+#    type: KNOB
+#  - adc_input: 1
+#    id: 2
+#    midi_CC: 71
+#    type: KNOB
